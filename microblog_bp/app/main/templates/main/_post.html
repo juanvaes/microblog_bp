@@ -1,0 +1,15 @@
+	<tr valign="top">
+		<td>
+			<img src=" {{ post.author.avatar(40) }} ">
+		</td>
+		<td>
+			<strong>
+				<a href="{{ url_for('main.user_profile', username = post.author.username) }}">
+					{{ post.author.username }}
+				</a>  
+			</strong> says: <br>{{ post['body']}}
+				{% if post.lan and post.lan != g.locale %}
+					<a href="#">Traducir</a>
+				{% endif %}
+		</td>
+	</tr>
