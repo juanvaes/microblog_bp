@@ -98,6 +98,12 @@ class User(UserMixin, db.Model):
 			'post_count': self.posts.count(),
 			'follower_count': self.followers.count(),
 			'followed_count': self.followed.count(),
+			'_links': {
+				'self': url_for('api.get_user', id = self.id),
+				'followers': url_for('api.get_followers', id = self.id),
+				'followed': url_for('api.get_followed', id = self.id),
+				'avatar': self.avatar(128)
+			}
 		}
 		if include_email:
 			data['email'] = self.email
