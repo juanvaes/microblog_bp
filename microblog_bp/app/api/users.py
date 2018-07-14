@@ -1,4 +1,4 @@
-from api import api
+from . import api
 
 @api.route('/users/<int:id>', methods=['GET'])
 def get_user(id):

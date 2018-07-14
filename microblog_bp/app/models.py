@@ -2,7 +2,7 @@
 # db.Model is a base class for all models in flask-sqalchemy, and define fields as class variables
 # fields of the database are created from db.Column class
 
-from flask import current_app
+from flask import current_app, url_for
 from sqlalchemy import Column, ForeignKey, Integer, String
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -88,15 +88,16 @@ class User(UserMixin, db.Model):
 		except:
 			return None
 		return User.query.get(id)
-	
-	def to_dict(self, include_email = False):
+
+
+	def to_dict(self, include_emaill = True):
 		data = {
 			'id': self.id,
 			'username': self.username,
-			'last_seen': self.last_seen.isoformat() + 'Z',
+			'last_seen': self.last_seen,
 			'about_me': self.about_me,
 			'post_count': self.posts.count(),
-			'follower_count': self.followers.count(),
+			'followers_count': self.followers.count(),
 			'followed_count': self.followed.count(),
 			'_links': {
 				'self': url_for('api.get_user', id = self.id),
@@ -105,19 +106,17 @@ class User(UserMixin, db.Model):
 				'avatar': self.avatar(128)
 			}
 		}
-		if include_email:
+		if include_emaill:
 			data['email'] = self.email
 		return data
-	
-	
-	def from_dict(self, data, new_user = False):
-		for field in ['username', 'email', 'about_me]:
-	 	    if field in data:
-		        setattr(self, field, data[field])
-		if new_user and 'password' in data:
-                    self.set_password(data['password'])
-			
 
+
+		def from_dict(self, data, new_user = False):
+			for field in ['username', 'email', 'about_me']:
+				if field in data:
+					setattr(self, field, data[field])
+			if new_user and 'password' in data:
+				self.set_password(data['password'])
 
 class Post(db.Model):
 	__tablename__ = 'post'
