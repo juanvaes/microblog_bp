@@ -88,6 +88,20 @@ class User(UserMixin, db.Model):
 		except:
 			return None
 		return User.query.get(id)
+	
+	def to_dict(self, include_email = False):
+		data = {
+			'id': self.id,
+			'username': self.username,
+			'last_seen': self.last_seen.isoformat() + 'Z',
+			'about_me': self.about_me,
+			'post_count': self.posts.count(),
+			'follower_count': self.followers.count(),
+			'followed_count': self.followed.count(),
+		}
+		if include_email:
+			data['email'] = self.email
+		return data
 
 
 class Post(db.Model):
