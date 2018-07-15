@@ -33,7 +33,7 @@ app.register_blueprint(au, url_prefix = '/auth')
 from .errors import er
 app.register_blueprint(er)
 from .api import api
-app.register_blueprint(api_bp, url_prefix='/api')
+app.register_blueprint(api, url_prefix='/api')
 
 @app.route('/')
 def index():
