@@ -37,7 +37,7 @@ pkg-resources==0.0.0
 pycodestyle==2.4.0
 pycparser==2.18
 Pygments==2.2.0
-PyJWT==1.6.4
+PyJWT==2.4.0
 pylint==1.9.2
 python-dateutil==2.7.3
 python-editor==1.0.3
